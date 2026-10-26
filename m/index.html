@@ -7,7 +7,7 @@
   <meta name="description" content="資金需求線上試算，選擇金額與期數，再填寫基本資料完成初步需求登記。">
   <meta name="theme-color" content="#fffdf9">
   <title>資金需求線上評估</title>
-  <script src="app.js?v=20261021-e-second-stage" defer></script>
+  <script src="app.js?v=20261026-m-nonblocking" defer></script>
   <style>
     :root {
       --ink:#10283a;
@@ -190,6 +190,10 @@
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
   </style>
   <link rel="stylesheet" href="calculator-refined.css">
+  <link rel="stylesheet" href="fintech.css">
+  <link rel="stylesheet" href="graphite.css">
+  <link rel="stylesheet" href="pearl.css?v=20261026-copy">
+  <script src="fintech.js" defer></script>
 </head>
 <body>
   <div class="stage">
@@ -206,9 +210,13 @@
 
       <section class="screen" id="calculator" aria-labelledby="calculator-title">
         <div class="screen-body">
+          <div class="intro-panel">
           <p class="eyebrow">STEP 01 · 快速資金周轉專案</p>
-          <h1 id="calculator-title">今天申請・最快當天撥款！<span>享 1.5% 起超低利</span></h1>
+          <h1 id="calculator-title">今天申請・<wbr><span class="headline-tail">最快當天撥款！</span><span>享 1.5% 起超低利</span></h1>
           <p class="lead">只要 1 分鐘線上試算，即刻掌握你的專屬額度！</p>
+          <div class="eligibility-note"><span>不看信用 不看聯徵 沒有勞保薪轉</span><strong>通通可以辦理</strong></div>
+          </div>
+          <div class="estimate-panel">
           <div class="balance-card">
             <div class="card-label"><span>您的需求金額</span><span>免登入試算</span></div>
             <div class="amount-control"><button class="amount-step" id="amount-prev" type="button" aria-label="減少試算金額">−</button><div class="amount-value" aria-live="polite"><strong id="amount-display">10 萬</strong><span id="amount-band">需求區間 5萬-10萬</span></div><button class="amount-step" id="amount-next" type="button" aria-label="增加試算金額">＋</button></div>
@@ -217,6 +225,7 @@
           <p class="section-label">選擇參考期數</p>
           <div class="term-list" role="group" aria-label="參考期數"><button class="term-button" type="button" data-term="24" aria-pressed="false">24期</button><button class="term-button" type="button" data-term="36" aria-pressed="false">36期</button><button class="term-button selected" type="button" data-term="60" aria-pressed="true">60期</button><button class="term-button" type="button" data-term="84" aria-pressed="false">84期</button><button class="term-button" type="button" data-term="120" aria-pressed="false">120期</button></div>
           <div class="result"><span>每月參考金額<small>試算利率 <b id="rate-display">2.5%</b></small></span><strong id="monthly-payment">NT$ 1,775</strong></div>
+          </div>
           <div class="mini-trust"><span>不用手機驗證</span><span>資料精簡</span><span>LINE 專員接續</span></div>
           <p class="legal">試算僅供參考，實際額度、利率、期數及結果依最終評估為準。</p>
         </div>

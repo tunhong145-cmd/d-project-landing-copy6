@@ -11,6 +11,9 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
   var initializedPixelIds = {};
   var pageViewTracked = false;
   var submittedApplicantName = '';
+  var submissionInFlight = false;
+  var submissionCompleted = false;
+  var conversionQueued = {};
   var amountValues = [5, 10, 20, 30, 50, 80, 100];
   var amountIndex = 1;
   var selectedTerm = 60;
@@ -175,6 +178,20 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
     });
   }
 
+  // Configuration starts on page load; conversion delivery must not block the UI.
+  var pixelInitializationReady = repositoryPixelsReady.then(function (ids) {
+    if (!IS_LOCAL_PREVIEW) initializeFbPixels(ids);
+  }).catch(function (error) { console.warn('Pixel initialization unavailable', error); });
+
+  function queueSubmissionEvents(leadId) {
+    if (conversionQueued[leadId]) return;
+    conversionQueued[leadId] = true;
+    pixelInitializationReady.then(function () {
+      trackFbEvent('CompleteRegistration', { content_name: 'D項目E版本', status: 'submitted' });
+      trackFbEvent('Lead', { content_name: 'D項目E版本', content_category: '貸款申請', value: 0, currency: 'TWD' });
+    }).catch(function (error) { console.warn('Conversion delivery unavailable', error); });
+  }
+
   function extractFbPixelIds(settings) {
     if (!Array.isArray(settings)) return [];
     var ids = [];
@@ -206,7 +223,6 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
       var rows = await response.json();
       var settings = rows && rows[0] ? rows[0] : {};
       ENTERPRISE_LINE_URL = String(settings.e_line_url || settings.line_url || '#').trim();
-      if (!IS_LOCAL_PREVIEW) initializeFbPixels(await repositoryPixelsReady);
     } catch (error) {
       console.warn('Site configuration unavailable', error);
     }
@@ -442,6 +458,7 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
 
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
+      if (submissionInFlight || submissionCompleted) return;
       var values = validateForm(form);
       if (!values) return;
 
@@ -457,6 +474,7 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
         return;
       }
 
+      submissionInFlight = true;
       submitButton.disabled = true;
       submitButton.textContent = '資料送出中，請稍候';
       var clientMetadata = await clientMetadataPromise;
@@ -484,14 +502,12 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
       };
 
       try {
-        await siteConfigPromise;
         var response = await submitLeadPayload(payload);
         if (!response || !response.ok) throw new Error('Submission failed');
+        submissionCompleted = true;
         window.__lastLeadId = payload.id;
         submittedApplicantName = values.name;
         $('#line-name-to-send').textContent = submittedApplicantName;
-      trackFbEvent('CompleteRegistration', { content_name: 'D項目E版本', status: 'submitted' });
-      trackFbEvent('Lead', { content_name: 'D項目E版本', content_category: '貸款申請', value: 0, currency: 'TWD' });
         $('#application-layout').hidden = true;
         $('#floating-apply').hidden = true;
         var success = $('#success-panel');
@@ -499,11 +515,14 @@ var STORAGE_KEY = 'd_project_e_selected_amount';
         success.focus({ preventScroll: true });
         setProgressStep(3);
         smoothScroll(success);
+        queueSubmissionEvents(payload.id);
       } catch (error) {
         console.warn('Lead submission failed', error);
         $('#form-status').textContent = '資料暫時無法送出，請稍後再試。已填寫的內容仍保留。';
         submitButton.disabled = false;
         submitButton.textContent = '重新送出資料';
+      } finally {
+        submissionInFlight = false;
       }
     });
   }
