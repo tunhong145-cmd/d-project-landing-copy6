@@ -328,7 +328,7 @@ body {
   position: static;
   inset: auto;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 9px;
   width: 100%;
@@ -356,10 +356,6 @@ body {
 .diamond-notice-lane .notice-amount { padding: 0; border: 0; background: none; color: #d4edff; font-size: 16px; letter-spacing: -.02em; white-space: nowrap; }
 .diamond-notice-lane .notice-amount small { margin-left: 2px; color: #c0daf9; font-size: 10px; }
 .diamond-notice-lane .application-notice:is(.is-changing, .is-updating) :is(.diamond-activity-copy, .notice-amount) { opacity: .74; }
-.diamond-playback { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 1px solid #7796bb70; border-radius: 7px; background: #e6f1ff17; color: #e5f1ff; pointer-events: auto; }
-.diamond-playback span { display: block; width: 8px; height: 10px; border: solid currentColor; border-width: 0 2px; }
-.diamond-playback:is([aria-pressed=true], [data-paused=true], [aria-label^="播放"], [aria-label^="繼續"]) span { width: 0; height: 0; margin-left: 2px; border: solid transparent; border-width: 5px 0 5px 8px; border-left-color: currentColor; }
-.app .diamond-playback:focus-visible { outline-color: #c4e3ff; outline-offset: 2px; }
 
 .app .primary {
   position: relative;
@@ -464,7 +460,6 @@ body {
   .diamond-activity-copy { column-gap: 5px; }
   .diamond-notice-lane .capsule-person { font-size: 11px; }
   .diamond-notice-lane .capsule-status { font-size: 10px; }
-  .diamond-playback { width: 26px; }
 }
 
 /* Taller phones: distribute spare space in the default calculator view.
