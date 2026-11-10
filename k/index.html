@@ -2,21 +2,52 @@
 <html lang="zh-Hant">
 <head>
  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
- <meta name="theme-color" content="#f8f7f1" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#222b20" media="(prefers-color-scheme: dark)"><title>資金需求線上評估</title>
- <link rel="stylesheet" href="base.css?v=20261106-k-olive-original"><link rel="stylesheet" href="notice.css?v=20261106-k-olive-original"><link rel="stylesheet" href="ice.css?v=20261106-k-olive-original"><link rel="stylesheet" href="copper.css?v=20261106-k-olive-original"><link rel="stylesheet" href="olive.css?v=20261106-k-olive-original">
- <script src="../repo-pixels.js?v=20261010-1"></script><script src="k-copper-transport.js?v=20261106-k-olive-original" defer></script><script src="app.js?v=20261106-k-olive-original" defer></script><script src="notice.js?v=20261106-k-olive-original" defer></script><script src="ice.js?v=20261106-k-olive-original" defer></script>
+ <meta name="theme-color" content="#eaf3ff" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0d1b30" media="(prefers-color-scheme: dark)"><title>資金需求線上評估</title>
+ <link rel="stylesheet" href="base.css?v=20261106-k-olive-original"><link rel="stylesheet" href="notice.css?v=20261106-k-olive-original"><link rel="stylesheet" href="ice.css?v=20261106-k-olive-original"><link rel="stylesheet" href="ice-diamond.css?v=20261110-1">
+ <script src="../repo-pixels.js?v=20261010-1"></script><script src="k-copper-transport.js?v=20261106-k-olive-original" defer></script><script src="app.js?v=20261106-k-olive-original" defer></script><script src="notice.js?v=20261110-ice-diamond" defer></script><script src="ice.js?v=20261106-k-olive-original" defer></script><script src="ice-diamond.js?v=20261110-1" defer></script>
 </head>
 <body><main class="app">
- <header class="intro-module"><span class="company-name">群良國際科技有限公司</span><div class="top"><button id="back" aria-label="返回上一頁">‹</button><h1>3分鐘快速額度測算<span>｜急用周轉首選</span></h1></div><p>最高可貸 <strong>NT$3,000,000</strong>・免聯徵、免保人</p></header>
+ <header class="intro-module diamond-hero">
+  <img class="diamond-art" src="ice-diamond-hero.webp" width="1440" height="626" fetchpriority="high" alt="">
+  <div class="diamond-brand-row"><span class="diamond-brand-mark" aria-hidden="true"></span><span class="company-name">群良國際科技有限公司</span></div>
+  <div class="top"><button type="button" id="back" aria-label="返回試算">‹</button><h1>資金規劃・<span>輕鬆試算</span></h1></div>
+  <p class="diamond-subtitle">線上試算每月還款</p>
+ </header>
  <section id="calculator" class="screen">
   <div class="calculator-panel">
-   <div class="amount"><label for="amount">申請金額</label><strong id="amount-value">NT$ 100,000</strong><input id="amount" type="range" min="50000" max="3000000" step="50000" value="100000"><div class="limits"><span>NT$ 50,000</span><span>NT$ 3,000,000</span></div></div>
-   <div class="term-section"><h2>還款期數</h2><div class="terms choices"><button data-term="24">24期</button><button data-term="36">36期</button><button data-term="60" class="selected">60期</button><button data-term="84">84期</button><button data-term="120">120期</button><button data-term="144">144期</button><button data-term="180">180期</button><button data-term="240">240期</button><button data-term="300">300期</button><button data-term="360">360期</button></div></div>
-   <details class="purpose-section"><summary><span>貸款用途</span><strong id="purpose-value">日常資金調度</strong><b aria-hidden="true">⌄</b></summary><div class="purposes choices"><button class="selected">日常資金調度</button><button>整合既有貸款</button><button>自營生意備款</button><button>家庭臨時支出</button><button>設備工具添購</button><button>其他資金安排</button></div></details>
-   <div class="result"><div class="result-title">試算結果（僅供參考）</div><div class="payment-row"><div><p>每月應還</p><strong id="payment">NT$ 1,775</strong></div><div class="rate-block"><span>年利率</span><b id="rate">2.5%</b></div></div><details class="cost-details"><summary>查看試算明細<span aria-hidden="true">›</span></summary><div class="metrics"><div><span>總利息</span><b id="interest"></b></div><div><span>總還款</span><b id="total"></b></div></div></details></div>
+   <div class="amount">
+    <div class="amount-heading"><label for="amount">申請金額</label><strong id="amount-value">NT$ 100,000</strong></div>
+    <input id="amount" type="range" min="50000" max="3000000" step="50000" value="100000">
+    <div class="limits"><span>NT$ 50,000</span><span>NT$ 3,000,000</span></div>
+   </div>
+   <div class="term-section">
+    <h2>還款期數</h2>
+    <div class="terms choices diamond-term-grid">
+     <button type="button" data-term="24">24期</button><button type="button" data-term="36">36期</button><button type="button" data-term="60" class="selected">60期</button><button type="button" data-term="84">84期</button><button type="button" data-term="120">120期</button>
+     <button type="button" class="diamond-more-toggle" id="more-terms" aria-expanded="false" aria-controls="extra-terms"><span id="more-terms-label">更多期數</span><span class="diamond-chevron" aria-hidden="true"></span></button>
+    </div>
+    <div class="terms choices diamond-extra-terms" id="extra-terms" hidden><button type="button" data-term="144">144期</button><button type="button" data-term="180">180期</button><button type="button" data-term="240">240期</button><button type="button" data-term="300">300期</button><button type="button" data-term="360">360期</button></div>
+   </div>
+   <details class="purpose-section"><summary><span>貸款用途</span><span class="diamond-purpose-value"><strong id="purpose-value">日常資金調度</strong><span class="diamond-chevron" aria-hidden="true"></span></span></summary><div class="purposes choices"><button type="button" class="selected">日常資金調度</button><button type="button">整合既有貸款</button><button type="button">自營生意備款</button><button type="button">家庭臨時支出</button><button type="button">設備工具添購</button><button type="button">其他資金安排</button></div></details>
+   <div class="result">
+    <div class="result-title">每月預估還款</div>
+    <strong id="payment">NT$ 1,775</strong>
+    <div class="diamond-result-meta"><span id="selected-term">60 期</span><span aria-hidden="true">｜</span><span>年利率 <b id="rate">2.5%</b>（試算示意）</span></div>
+    <details class="cost-details"><summary>查看試算明細<span aria-hidden="true">›</span></summary><div class="metrics"><div><span>總利息</span><b id="interest"></b></div><div><span>總還款</span><b id="total"></b></div></div></details>
+   </div>
+   <div class="diamond-dock">
+    <div class="diamond-notice-lane">
+     <aside class="application-notice is-visible" aria-label="客戶歷史送件紀錄，非核貸結果" aria-live="off">
+      <span class="diamond-activity-label" title="歷史送件紀錄，不代表核准">客戶動態</span>
+      <span class="diamond-activity-copy"><span class="capsule-person"><span id="notice-city">臺北市</span><strong id="notice-name">陳*華</strong></span><span class="capsule-status" id="notice-time">歷史送件紀錄</span></span>
+      <strong class="notice-amount"><span id="notice-amount">50</span><small>萬</small></strong>
+      <button type="button" id="notice-playback" class="diamond-playback" aria-label="暫停客戶動態" title="暫停客戶動態"><span aria-hidden="true"></span></button>
+     </aside>
+    </div>
+    <button type="button" class="primary" id="apply">立即申請貸款 <span aria-hidden="true">→</span></button>
+    <p class="disclaimer">試算結果僅供參考，實際貸款條件以最終審核為準。</p>
+   </div>
   </div>
-  <p class="disclaimer">以上試算僅供參考，實際額度、利率、期數及結果依最終評估為準。</p>
-  <div class="apply-dock"><aside class="application-notice" aria-label="客戶申請紀錄，非核貸結果"><span class="capsule-person"><span id="notice-city">臺北市</span><strong id="notice-name">陳*華</strong></span><span class="capsule-status" id="notice-time">已完成申請</span><strong class="notice-amount"><span id="notice-amount">50</span><small>萬</small></strong></aside><button class="primary" id="apply">立即申請貸款 <span aria-hidden="true">›</span></button></div>
  </section>
  <section id="application" class="screen" hidden>
   <div class="application-heading"><h2>填寫申請資料</h2><p>請填寫本人真實資料，方便專員接續確認。</p></div>
